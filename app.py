@@ -3,10 +3,10 @@ from gtts import gTTS
 from deep_translator import GoogleTranslator
 import streamlit as st
 
-# Set up Streamlit page configuration as the first command in the script
+# Set up Streamlit page
 st.set_page_config(
     page_title="Speakify - Text-to-Speech & Translation App",
-    page_icon="weblogo2.png",  # Set the logo.png as the page icon
+    page_icon="weblogo2.png",  
     layout="centered",
 )
 
@@ -15,7 +15,7 @@ if not os.path.exists('static'):
     os.makedirs('static')
 
 # Add the logo and app name at the top
-st.image('weblogo2.png', use_container_width=True)  # Display the logo at the top of the page
+st.image('weblogo2.png', use_container_width=True)  
 
 st.markdown("<h1 style='text-align: center;'>Speakify</h1>", unsafe_allow_html=True)
 st.markdown("Convert your text to speech or translate and convert it into audio!")
@@ -29,11 +29,9 @@ option = st.sidebar.radio(
 # Upload a text file
 uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
 if uploaded_file:
-    # Read uploaded file content
     text = uploaded_file.read().decode("utf-8")
     st.success("File uploaded successfully!")
 else:
-    # If no file is uploaded, use the text box
     text = st.text_area("Enter the text:")
 
 # Language options
@@ -58,12 +56,11 @@ if st.button("Process"):
         audio_filename = "static/output.mp3"
 
         if option == "Text-to-Speech Only":
-            # Text-to-Speech only
             tts = gTTS(text=text, lang=speech_language[1])
             tts.save(audio_filename)
             st.success("Text-to-Speech conversion successful!")
+            
         elif option == "Translate and Text-to-Speech":
-            # Translate and Text-to-Speech
             translated_text = GoogleTranslator(source='auto', target=translate_language[1]).translate(text)
             tts = gTTS(text=translated_text, lang=translate_language[1])
             tts.save(audio_filename)
